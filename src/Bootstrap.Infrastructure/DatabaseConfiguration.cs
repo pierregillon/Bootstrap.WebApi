@@ -6,5 +6,6 @@ public class DatabaseConfiguration
 {
     public const string SectionName = "Database";
 
-    [Required] public string ConnectionString { get; set; } = default!;
+    [Required] 
+    public string ConnectionString { get; set; } = default!;
 }

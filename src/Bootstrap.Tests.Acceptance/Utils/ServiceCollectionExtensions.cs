@@ -1,4 +1,5 @@
 ﻿using Bootstrap.Infrastructure;
+using Bootstrap.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,7 +29,8 @@ public static class ServiceCollectionExtensions
 
     public static void RemoveWhere(this IServiceCollection services, Func<ServiceDescriptor, bool> filter)
     {
-        var toRemove = services.Where(filter).ToArray();
+        var toRemove = services.Where(filter)
+            .ToArray();
 
         foreach (var serviceDescriptor in toRemove)
         {

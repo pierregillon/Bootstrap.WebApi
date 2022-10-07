@@ -33,5 +33,7 @@ app.Run();
 
 namespace Bootstrap.WebApi
 {
-    public partial class Program { }
+    public partial class Program
+    {
+    }
 }

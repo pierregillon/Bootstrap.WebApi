@@ -1,20 +1,18 @@
-using Bootstrap.Domain;
+using Bootstrap.Domain.Customers;
+using Bootstrap.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 
-namespace Bootstrap.Infrastructure;
+namespace Bootstrap.Infrastructure.Customers;
 
 internal class SqlCustomerRepository : ICustomerRepository
 {
     private readonly BootstrapDbContext _dbContext;
 
-    public SqlCustomerRepository(BootstrapDbContext dbContext)
-    {
-        this._dbContext = dbContext;
-    }
+    public SqlCustomerRepository(BootstrapDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<Customer> Get(Guid customerId)
     {
-        var entity = await this._dbContext.Customers.SingleOrDefaultAsync(x => x.Id == customerId);
+        var entity = await _dbContext.Customers.SingleOrDefaultAsync(x => x.Id == customerId);
         if (entity is null)
         {
             throw new InvalidOperationException($"Cannot found the user with id {customerId}");
@@ -25,14 +23,11 @@ internal class SqlCustomerRepository : ICustomerRepository
 
     public async Task Save(Customer customer)
     {
-        var entity = await this._dbContext.Customers.FindAsync(customer.Id);
+        var entity = await _dbContext.Customers.FindAsync(customer.Id);
         if (entity is null)
         {
-            this._dbContext.Customers.Add(
-                new CustomerEntity
-                {
-                    Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName
-                });
+            _dbContext.Customers.Add(
+                new CustomerEntity {Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName});
         }
         else
         {
@@ -40,6 +35,6 @@ internal class SqlCustomerRepository : ICustomerRepository
             entity.LastName = customer.LastName;
         }
 
-        await this._dbContext.SaveChangesAsync();
+        await _dbContext.SaveChangesAsync();
     }
 }

@@ -3,7 +3,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Bootstrap.Infrastructure;
+namespace Bootstrap.Infrastructure.EF;
 
 public class BootstrapDbContext : DbContext
 {

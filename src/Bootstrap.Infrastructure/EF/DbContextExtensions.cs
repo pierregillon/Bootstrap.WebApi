@@ -3,16 +3,15 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Bootstrap.Infrastructure;
+namespace Bootstrap.Infrastructure.EF;
 
 internal static class DbContextExtensions
 {
     internal static DbContextOptionsBuilder UseNpgsql(
         this DbContextOptionsBuilder options,
         IOptions<DatabaseConfiguration> dbConfiguration
-    )
-    {
-        return options.UseNpgsql(
+    ) =>
+        options.UseNpgsql(
             dbConfiguration.Value.ConnectionString,
             sqlOptions =>
             {
@@ -20,15 +19,12 @@ internal static class DbContextExtensions
                 sqlOptions.EnableRetryOnFailure(25, TimeSpan.FromSeconds(2), null);
             }
         );
-    }
 
     internal static DbContextOptionsBuilder UseLogging(this DbContextOptionsBuilder options,
-        ILogger<BootstrapDbContext> logger)
-    {
-        return options
+        ILogger<BootstrapDbContext> logger) =>
+        options
             .LogTo((_1, _2) => true, e => logger.Log(e.LogLevel, e.EventId, e.ToString()))
             .EnableSensitiveDataLogging()
             .EnableDetailedErrors()
             .ConfigureWarnings(warnings => warnings.Ignore(CoreEventId.ContextInitialized));
-    }
 }

@@ -1,7 +1,8 @@
 using Bootstrap.BuildingBlocks.Commands;
 using Bootstrap.Domain;
+using Bootstrap.Domain.Customers;
 
-namespace Bootstrap.Application;
+namespace Bootstrap.Application.Customers;
 
 public record RegisterNewCustomerCommand(string FirstName, string LastName) : ICommand;
 
@@ -9,12 +10,9 @@ internal class RegisterNewCustomerHandler : ICommandHandler<RegisterNewCustomerC
 {
     private readonly ICustomerRepository _repository;
 
-    public RegisterNewCustomerHandler(ICustomerRepository repository)
-    {
-        _repository = repository;
-    }
+    public RegisterNewCustomerHandler(ICustomerRepository repository) => _repository = repository;
 
-    async Task ICommandHandler<RegisterNewCustomerCommand>.Handle(RegisterNewCustomerCommand command)
+    public async Task Handle(RegisterNewCustomerCommand command)
     {
         var customer = Customer.Register(command.FirstName, command.LastName);
 

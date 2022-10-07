@@ -9,10 +9,7 @@ public class ScenarioInitializer : IDisposable
     private readonly ScenarioContext _scenarioContext;
     private WebApplicationFactory<WebApi.Program>? _application;
 
-    public ScenarioInitializer(ScenarioContext scenarioContext)
-    {
-        _scenarioContext = scenarioContext;
-    }
+    public ScenarioInitializer(ScenarioContext scenarioContext) => _scenarioContext = scenarioContext;
 
     [BeforeScenario]
     public void InitializeAsync()
@@ -23,7 +20,10 @@ public class ScenarioInitializer : IDisposable
 
     protected virtual void Dispose(bool disposing)
     {
-        if (disposing) _application?.Dispose();
+        if (disposing)
+        {
+            _application?.Dispose();
+        }
     }
 
     public void Dispose()

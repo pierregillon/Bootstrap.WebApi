@@ -18,44 +18,48 @@ public class CustomerSteps : StepBase
     {
         var data = table.CreateInstance<CustomerSpecflowData>();
 
-        await this.Client.Post("api/customers", new { firstName = data.FirstName, lastName = data.LastName });
+        await Client.Post("api/customers", new {firstName = data.FirstName, lastName = data.LastName});
     }
 
     [When(@"I rename the customer ""([^""]*)"" to ""([^""]*)""")]
     public async Task WhenIRenameTheCustomerTo(string originalFullName, string newFullName)
     {
-        var customers = await this.Client.Get<IEnumerable<CustomerListItemSpecflowData>>("api/customers");
+        var customers = await Client.Get<IEnumerable<CustomerListItemSpecflowData>>("api/customers");
 
         var customer = customers.Single(x => x.FullName == originalFullName);
 
-        var firstName = newFullName.Split(' ').First();
-        var lastName = newFullName.Split(' ').Last();
+        var firstName = newFullName.Split(' ')
+            .First();
+        var lastName = newFullName.Split(' ')
+            .Last();
 
-        await this.Client.Put($"api/customers/{customer.Id}/rename", new { firstName, lastName });
+        await Client.Put($"api/customers/{customer.Id}/rename", new {firstName, lastName});
     }
 
     [When(@"I rename an unknown customer to ""([^""]*)""")]
     public async Task WhenIRenameAnUnknownCustomerTo(string newFullName)
     {
-        var firstName = newFullName.Split(' ').First();
-        var lastName = newFullName.Split(' ').Last();
+        var firstName = newFullName.Split(' ')
+            .First();
+        var lastName = newFullName.Split(' ')
+            .Last();
 
-        await this.Client.Put($"api/customers/{Guid.NewGuid()}/rename", new { firstName, lastName });
+        await Client.Put($"api/customers/{Guid.NewGuid()}/rename", new {firstName, lastName});
     }
 
     [Then(@"the customer list is")]
     public async Task ThenTheCustomerListIs(Table table)
     {
-        var actualCustomers = await this.Client.Get<IEnumerable<CustomerListItemSpecflowData>>("api/customers");
+        var actualCustomers = await Client.Get<IEnumerable<CustomerListItemSpecflowData>>("api/customers");
 
         var expectedCustomers = table.CreateSet<CustomerListItemSpecflowData>();
 
         actualCustomers
             .Should()
-            .BeEquivalentTo(expectedCustomers, options=>options.Excluding(x => x.Id));
+            .BeEquivalentTo(expectedCustomers, options => options.Excluding(x => x.Id));
     }
 }
 
 public record CustomerSpecflowData(string FirstName, string LastName);
-public record CustomerListItemSpecflowData(Guid Id, string FullName);
 
+public record CustomerListItemSpecflowData(Guid Id, string FullName);

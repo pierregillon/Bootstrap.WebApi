@@ -21,10 +21,7 @@ public class AcceptanceTestApplication : WebApplicationFactory<WebApi.Program>
             ;
     }
 
-    private static void ConfigureServices(IServiceCollection services)
-    {
-        services.AddEntityFrameworkInMemory();
-    }
+    private static void ConfigureServices(IServiceCollection services) => services.AddEntityFrameworkInMemory();
 
     private void ConfigureTestServices(IServiceCollection services)
     {

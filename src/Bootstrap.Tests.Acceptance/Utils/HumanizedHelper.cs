@@ -7,18 +7,21 @@ namespace Bootstrap.Tests.Acceptance.Utils;
 
 public static class HumanizedHelper
 {
-    public static T ParseEnum<T>(string humanizedString) where T : Enum
-    {
-        return (T)ParseEnum(typeof(T), humanizedString);
-    }
+    public static T ParseEnum<T>(string humanizedString) where T : Enum => (T)ParseEnum(typeof(T), humanizedString);
 
     public static object ParseEnum(Type enumType, string humanizedString)
     {
         var normalized = FromHumanizedToNormalized(humanizedString);
-        return (!string.IsNullOrEmpty(normalized) ? 0 :
-            enumType.GetCustomAttribute(typeof(FlagsAttribute)) != null ? 1 : 0) != 0
-            ? Activator.CreateInstance(enumType)
-            : Enum.Parse(enumType, normalized, true);
+
+        var isEnumFlag = enumType.GetCustomAttribute(typeof(FlagsAttribute)) != null;
+
+        if (string.IsNullOrEmpty(normalized) && isEnumFlag)
+        {
+            return Activator.CreateInstance(enumType)!;
+        }
+
+        return Enum.Parse(enumType, normalized, true);
+
     }
 
     public static bool TryParseEnum<T>(string humanizedString, out T result) where T : Enum
@@ -47,25 +50,20 @@ public static class HumanizedHelper
         return true;
     }
 
-    public static bool EqualsHumanized(this string input1, string input2)
-    {
-        return FromHumanizedToNormalized(input1) == FromHumanizedToNormalized(input2);
-    }
+    public static bool EqualsHumanized(this string input1, string input2) =>
+        FromHumanizedToNormalized(input1) == FromHumanizedToNormalized(input2);
 
-    public static string FromHumanizedToNormalized(string humanizedString)
-    {
-        return string.IsNullOrWhiteSpace(humanizedString)
+    public static string FromHumanizedToNormalized(string humanizedString) =>
+        string.IsNullOrWhiteSpace(humanizedString)
             ? string.Empty
-            : Regex.Replace(humanizedString.RemoveDiacritics().ToLowerInvariant(), "[^a-z0-9,]+", "");
-    }
+            : Regex.Replace(humanizedString.RemoveDiacritics()
+                .ToLowerInvariant(), "[^a-z0-9,]+", "");
 
-    public static IReadOnlyCollection<T> ParseEnums<T>(string humanizedString) where T : Enum
-    {
-        return humanizedString.Split(",")
+    public static IReadOnlyCollection<T> ParseEnums<T>(string humanizedString) where T : Enum =>
+        humanizedString.Split(",")
             .Where(value => !string.IsNullOrWhiteSpace(value))
             .Select(ParseEnum<T>)
             .ToArray();
-    }
 
     private static string RemoveDiacritics(this string text)
     {
@@ -79,6 +77,7 @@ public static class HumanizedHelper
             }
         }
 
-        return stringBuilder.ToString().Normalize(NormalizationForm.FormC);
+        return stringBuilder.ToString()
+            .Normalize(NormalizationForm.FormC);
     }
 }

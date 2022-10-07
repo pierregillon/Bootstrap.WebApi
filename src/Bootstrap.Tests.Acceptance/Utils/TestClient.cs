@@ -1,4 +1,4 @@
-using System.Text;
+﻿using System.Text;
 using System.Text.Json;
 using TechTalk.SpecFlow;
 
@@ -6,46 +6,44 @@ namespace Bootstrap.Tests.Acceptance.Utils;
 
 public class TestClient
 {
-    private readonly ScenarioContext context;
-    private readonly ErrorDriver errorDriver;
+    private readonly ScenarioContext _context;
+    private readonly ErrorDriver _errorDriver;
 
     protected TestClient(ScenarioContext context, ErrorDriver errorDriver)
     {
-        this.context = context;
-        this.errorDriver = errorDriver;
+        _context = context;
+        _errorDriver = errorDriver;
     }
 
-    private HttpClient HttpClient => this.context.Get<HttpClient>();
+    private HttpClient HttpClient => _context.Get<HttpClient>();
 
-    public async Task Post(string path, object body)
-    {
-        await this.errorDriver.TryExecute(
+    public async Task Post(string path, object body) =>
+        await _errorDriver.TryExecute(
             async () =>
             {
-                var response = await this.HttpClient.PostAsync(path, ToStringContent(body));
+                var response = await HttpClient.PostAsync(path, ToStringContent(body));
 
                 await ProcessError(path, response);
             });
-    }
 
-    public async Task Put(string path, object body)
-    {
-        await this.errorDriver.TryExecute(
+    public async Task Put(string path, object body) =>
+        await _errorDriver.TryExecute(
             async () =>
             {
-                var response = await this.HttpClient.PutAsync(path, ToStringContent(body));
+                var response = await HttpClient.PutAsync(path, ToStringContent(body));
 
                 await ProcessError(path, response);
-            });
-    }
+            }
+        );
 
     public async Task<T> Get<T>(string path)
     {
-        var json = await this.HttpClient.GetStringAsync(path);
+        var json = await HttpClient.GetStringAsync(path);
 
-        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
 
-        return JsonSerializer.Deserialize<T>(json, options) ?? throw new InvalidOperationException($"Unable to deserialize the response to {typeof(T)}");
+        return JsonSerializer.Deserialize<T>(json, options) ??
+               throw new InvalidOperationException($"Unable to deserialize the response to {typeof(T)}");
     }
 
     private static StringContent ToStringContent(object body)

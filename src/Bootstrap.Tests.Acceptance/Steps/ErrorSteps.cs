@@ -1,8 +1,6 @@
+﻿using System.Net;
 using Bootstrap.Tests.Acceptance.Utils;
 using FluentAssertions;
-using Microsoft.AspNetCore.Mvc;
-using System.Net;
-using System.Text.Json;
 using TechTalk.SpecFlow;
 
 namespace Bootstrap.Tests.Acceptance.Steps;
@@ -10,12 +8,9 @@ namespace Bootstrap.Tests.Acceptance.Steps;
 [Binding]
 public class ErrorSteps
 {
-    private readonly ErrorDriver errorDriver;
+    private readonly ErrorDriver _errorDriver;
 
-    public ErrorSteps(ErrorDriver errorDriver)
-    {
-        this.errorDriver = errorDriver;
-    }
+    public ErrorSteps(ErrorDriver errorDriver) => _errorDriver = errorDriver;
 
     /// <summary>
     /// Usage :
@@ -39,13 +34,15 @@ public class ErrorSteps
     )]
     public void ThenAnErrorIsThrownWithCodeAndMessage(string statusCode, string errorType, string message)
     {
-        var error = errorDriver.GetLastError();
+        var error = _errorDriver.GetLastError();
 
-        error.Should().NotBeNull();
+        error.Should()
+            .NotBeNull();
 
         if (!string.IsNullOrWhiteSpace(errorType))
         {
-            error.ErrorType.Should().Be(errorType);
+            error.ErrorType.Should()
+                .Be(errorType);
         }
 
         if (!string.IsNullOrWhiteSpace(statusCode))
@@ -57,14 +54,13 @@ public class ErrorSteps
 
         if (!string.IsNullOrWhiteSpace(message))
         {
-            error.ProblemDetails.Title.Should().NotBeNull();
-            error.ProblemDetails.Title.Should().MatchRegex(message);
+            error.ProblemDetails.Title.Should()
+                .NotBeNull();
+            error.ProblemDetails.Title.Should()
+                .MatchRegex(message);
         }
     }
 
     [AfterScenario]
-    public void ThrowIfNotCatched()
-    {
-        errorDriver.ThrowIfNotProcessedException();
-    }
+    public void ThrowIfNotProcessedException() => _errorDriver.ThrowIfNotProcessedException();
 }

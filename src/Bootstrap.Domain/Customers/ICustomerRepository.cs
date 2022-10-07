@@ -1,4 +1,4 @@
-namespace Bootstrap.Domain;
+namespace Bootstrap.Domain.Customers;
 
 public interface ICustomerRepository
 {

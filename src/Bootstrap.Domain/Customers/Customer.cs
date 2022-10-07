@@ -1,4 +1,4 @@
-namespace Bootstrap.Domain;
+namespace Bootstrap.Domain.Customers;
 
 public class Customer
 {
@@ -7,9 +7,9 @@ public class Customer
 
     private Customer(Guid id, string firstName, string lastName)
     {
-        this.Id = id;
-        this.FirstName = firstName;
-        this.LastName = lastName;
+        Id = id;
+        FirstName = firstName;
+        LastName = lastName;
     }
 
     public Guid Id { get; }
@@ -18,7 +18,7 @@ public class Customer
 
     public void Rename(string firstName, string lastName)
     {
-        this.FirstName = firstName;
-        this.LastName = lastName;
+        FirstName = firstName;
+        LastName = lastName;
     }
 }

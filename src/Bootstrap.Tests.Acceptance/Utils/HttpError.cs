@@ -1,5 +1,5 @@
+﻿using System.Net;
 using Microsoft.AspNetCore.Mvc;
-using System.Net;
 
 namespace Bootstrap.Tests.Acceptance.Utils;
 
@@ -7,12 +7,8 @@ public class HttpError
 {
     public HttpError(Exception exception)
     {
-        this.InnerException = exception;
-        this.ProblemDetails = new ProblemDetails
-        {
-            Title = exception.Message,
-            Detail = exception.Message
-        };
+        InnerException = exception;
+        ProblemDetails = new ProblemDetails {Title = exception.Message, Detail = exception.Message};
     }
 
     public string ErrorType { get; set; }

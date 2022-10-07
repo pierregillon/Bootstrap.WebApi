@@ -1,4 +1,4 @@
-using Bootstrap.Tests.Acceptance.Utils;
+﻿using Bootstrap.Tests.Acceptance.Utils;
 
 namespace Bootstrap.Tests.Acceptance.Steps;
 
@@ -6,8 +6,5 @@ public abstract class StepBase
 {
     protected readonly TestClient Client;
 
-    protected StepBase(TestClient client)
-    {
-        this.Client = client;
-    }
+    protected StepBase(TestClient client) => Client = client;
 }

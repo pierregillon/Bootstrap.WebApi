@@ -5,9 +5,8 @@ namespace Bootstrap.Tests.Acceptance.Utils;
 
 internal static class LoggingExtensions
 {
-    internal static IWebHostBuilder UseLogger(this IWebHostBuilder webHostBuilder)
-    {
-        return webHostBuilder.ConfigureLogging(
+    internal static IWebHostBuilder UseLogger(this IWebHostBuilder webHostBuilder) =>
+        webHostBuilder.ConfigureLogging(
             builder =>
                 builder.AddSimpleConsole(option =>
                 {
@@ -15,5 +14,4 @@ internal static class LoggingExtensions
                     option.TimestampFormat = "hh:mm:ss ";
                 })
         );
-    }
 }

@@ -1,22 +1,19 @@
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 
 namespace Bootstrap.Tests.Acceptance.Utils;
 
 public class ErrorDriver
 {
-    private readonly ScenarioInfo scenarioInfo;
-    private Queue<HttpError> errors = new();
+    private readonly ScenarioInfo _scenarioInfo;
+    private readonly Queue<HttpError> _errors = new();
 
-    public ErrorDriver(ScenarioInfo scenarioInfo)
-    {
-        this.scenarioInfo = scenarioInfo;
-    }
+    public ErrorDriver(ScenarioInfo scenarioInfo) => _scenarioInfo = scenarioInfo;
 
-    private bool InErrorScenario => this.scenarioInfo.Tags.Contains("ErrorHandling");
+    private bool InErrorScenario => _scenarioInfo.Tags.Contains("ErrorHandling");
 
     public async Task TryExecute(Func<Task> action)
     {
-        if (!this.InErrorScenario)
+        if (!InErrorScenario)
         {
             await action();
         }
@@ -28,16 +25,16 @@ public class ErrorDriver
             }
             catch (Exception ex)
             {
-                this.errors.Enqueue(new HttpError(ex));
+                _errors.Enqueue(new HttpError(ex));
             }
         }
     }
 
     public HttpError GetLastError()
     {
-        if (!this.errors.TryDequeue(out var error))
+        if (!_errors.TryDequeue(out var error))
         {
-            throw new InvalidOperationException("No error has been thrown but it should");
+            throw new SpecFlowException("No error has been thrown but it should");
         }
 
         return error;
@@ -45,12 +42,9 @@ public class ErrorDriver
 
     public void ThrowIfNotProcessedException()
     {
-        if (!this.InErrorScenario)
+        if (_errors.Any())
         {
-            if (this.errors.Any())
-            {
-                throw this.errors.Dequeue().InnerException;
-            }
+            throw new SpecFlowException("An error occurred during scenario but has not be processed.", _errors.Dequeue().InnerException);
         }
     }
 }

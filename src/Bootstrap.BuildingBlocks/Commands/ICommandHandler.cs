@@ -10,5 +10,5 @@ public interface ICommandHandler<in T> : IRequestHandler<T, Unit> where T : ICom
         return Unit.Value;
     }
 
-    protected Task Handle(T command);
+    Task Handle(T command);
 }
