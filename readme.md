@@ -13,5 +13,8 @@ Solution scafolding to quickly bootstrap an API.
 - Versioning
 - Swagger
 - Problem details
-- Health check [todo]
+- Health check
 
+## Telemetry [todo]
+## Feature Management [todo]
+## Transaction scope [todo]

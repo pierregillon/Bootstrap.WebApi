@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Application;
 using Bootstrap.BuildingBlocks;
 using Bootstrap.Infrastructure;
+using Bootstrap.WebApi.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,7 +15,9 @@ builder.Services.AddSwaggerGen();
 builder.Services
     .RegisterBuildingBlocks()
     .RegisterApplication()
-    .RegisterInfrastructure();
+    .RegisterInfrastructure()
+    .AddServiceHealthChecks()
+    ;
 
 var app = builder.Build();
 
@@ -24,7 +27,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
-app.UseExceptionHandler("/internal/error");
+app
+    .UseHealthChecksRoutes()
+    .UseExceptionHandler("/internal/error");
+
 app.UseAuthorization();
 app.MapControllers();
 
