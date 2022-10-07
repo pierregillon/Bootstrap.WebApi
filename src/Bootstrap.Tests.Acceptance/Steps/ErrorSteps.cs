@@ -36,28 +36,22 @@ public class ErrorSteps
     {
         var error = _errorDriver.GetLastError();
 
-        error.Should()
-            .NotBeNull();
-
         if (!string.IsNullOrWhiteSpace(errorType))
         {
-            error.ErrorType.Should()
-                .Be(errorType);
+            error.ProblemDetails.Type.Should().Be(errorType);
         }
 
         if (!string.IsNullOrWhiteSpace(statusCode))
         {
-            error.StatusCode
+            error.HttpStatusCode
                 .Should()
                 .Be(HumanizedHelper.ParseEnum<HttpStatusCode>(statusCode), $"it should be a {statusCode} error.");
         }
 
         if (!string.IsNullOrWhiteSpace(message))
         {
-            error.ProblemDetails.Title.Should()
-                .NotBeNull();
-            error.ProblemDetails.Title.Should()
-                .MatchRegex(message);
+            error.ProblemDetails.Title.Should().NotBeNull();
+            error.ProblemDetails.Title.Should().MatchRegex(message);
         }
     }
 

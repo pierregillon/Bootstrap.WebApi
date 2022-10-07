@@ -23,7 +23,7 @@ public class ErrorDriver
             {
                 await action();
             }
-            catch (Exception ex)
+            catch (HttpException ex)
             {
                 _errors.Enqueue(new HttpError(ex));
             }

@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Text.Json;
+using Microsoft.AspNetCore.Mvc;
 using TechTalk.SpecFlow;
 
 namespace Bootstrap.Tests.Acceptance.Utils;
@@ -40,6 +41,11 @@ public class TestClient
     {
         var json = await HttpClient.GetStringAsync(path);
 
+        return Deserialize<T>(json);
+    }
+
+    private static T Deserialize<T>(string json)
+    {
         var options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
 
         return JsonSerializer.Deserialize<T>(json, options) ??
@@ -57,9 +63,11 @@ public class TestClient
     {
         if (!response.IsSuccessStatusCode)
         {
-            var result = await response.Content.ReadAsStringAsync();
+            var problemDetailsJson = await response.Content.ReadAsStringAsync();
 
-            throw new Exception($"{response.StatusCode} on {path} : {result}");
+            var problemDetails = Deserialize<ProblemDetails>(problemDetailsJson);
+
+            throw new HttpException(path, problemDetails);
         }
     }
 }

@@ -5,15 +5,14 @@ namespace Bootstrap.Tests.Acceptance.Utils;
 
 public class HttpError
 {
-    public HttpError(Exception exception)
+    public HttpError(HttpException exception)
     {
         InnerException = exception;
-        ProblemDetails = new ProblemDetails {Title = exception.Message, Detail = exception.Message};
+        ProblemDetails = exception.ProblemDetails;
     }
 
-    public string ErrorType { get; set; }
-    public HttpStatusCode StatusCode { get; set; }
-    public string Content { get; set; }
-    public ProblemDetails ProblemDetails { get; set; }
+    public ProblemDetails ProblemDetails { get; }
     public Exception InnerException { get; }
+    public HttpStatusCode HttpStatusCode =>
+        (HttpStatusCode)(this.ProblemDetails.Status ?? throw new InvalidOperationException("No status"));
 }
