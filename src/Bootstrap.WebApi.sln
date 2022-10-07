@@ -3,21 +3,21 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.1.32328.378
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.WebApi", "Bootstrap.WebApi\Bootstrap.WebApi.csproj", "{9073EED7-45D2-45ED-845F-9B225F3A568F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.WebApi", "Bootstrap.WebApi\Bootstrap.WebApi.csproj", "{9073EED7-45D2-45ED-845F-9B225F3A568F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Domain", "Bootstrap.Domain\Bootstrap.Domain.csproj", "{CF2C0127-CC27-4808-8A65-6DAA9D816D65}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Domain", "Bootstrap.Domain\Bootstrap.Domain.csproj", "{CF2C0127-CC27-4808-8A65-6DAA9D816D65}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Infrastructure", "Bootstrap.Infrastructure\Bootstrap.Infrastructure.csproj", "{88C96696-103B-4008-9B9C-ABB11E70B82A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Infrastructure", "Bootstrap.Infrastructure\Bootstrap.Infrastructure.csproj", "{88C96696-103B-4008-9B9C-ABB11E70B82A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.BuildingBlocks", "Bootstrap.BuildingBlocks\Bootstrap.BuildingBlocks.csproj", "{0F740627-1FD2-4671-893B-76A78A82EF5C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.BuildingBlocks", "Bootstrap.BuildingBlocks\Bootstrap.BuildingBlocks.csproj", "{0F740627-1FD2-4671-893B-76A78A82EF5C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Application", "Bootstrap.Application\Bootstrap.Application.csproj", "{5622DAEE-F624-4142-86CE-DB1311A7D53B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Application", "Bootstrap.Application\Bootstrap.Application.csproj", "{5622DAEE-F624-4142-86CE-DB1311A7D53B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Tests.Acceptance", "Bootstrap.Tests.Acceptance\Bootstrap.Tests.Acceptance.csproj", "{0F7A3949-C4F1-4BB3-8BD5-9577CED1B8EE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Tests.Acceptance", "Bootstrap.Tests.Acceptance\Bootstrap.Tests.Acceptance.csproj", "{0F7A3949-C4F1-4BB3-8BD5-9577CED1B8EE}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DA1AE890-37B4-4B5A-96F7-2657C4F6D827}"
 	ProjectSection(SolutionItems) = preProject
-		readme.md = readme.md
+		..\readme.md = ..\readme.md
 	EndProjectSection
 EndProject
 Global

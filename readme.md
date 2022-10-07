@@ -1,6 +1,17 @@
-- Healthcheck
-- Problem details
+# Bootstrap WebApi
+Solution scafolding to quickly bootstrap an API.
 
-- CQS (Mediator)
-- Event driven
-- TA with specflow and test server
+## Global pattern
+- Hexagonal architecture
+- Command and Query Segregation (CQS) using Mediator
+- Event driven architecture
+
+## Testability
+- Acceptance test using Specflow on top of api
+
+## Api
+- Versioning
+- Swagger
+- Problem details
+- Health check [todo]
+
