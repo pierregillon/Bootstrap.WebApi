@@ -1,4 +1,4 @@
-using Bootstrap.Domain.Customers;
+﻿using Bootstrap.Domain.Customers;
 using Bootstrap.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,15 +26,17 @@ internal class SqlCustomerRepository : ICustomerRepository
         var entity = await _dbContext.Customers.FindAsync(customer.Id);
         if (entity is null)
         {
-            _dbContext.Customers.Add(
-                new CustomerEntity {Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName});
+            _dbContext.Customers.Add(new CustomerEntity
+            {
+                Id = customer.Id, 
+                FirstName = customer.FirstName, 
+                LastName = customer.LastName
+            });
         }
         else
         {
             entity.FirstName = customer.FirstName;
             entity.LastName = customer.LastName;
         }
-
-        await _dbContext.SaveChangesAsync();
     }
 }

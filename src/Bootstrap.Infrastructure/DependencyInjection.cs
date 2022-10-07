@@ -1,4 +1,5 @@
-﻿using Bootstrap.Domain.Customers;
+﻿using Bootstrap.BuildingBlocks;
+using Bootstrap.Domain.Customers;
 using Bootstrap.Infrastructure.Customers;
 using Bootstrap.Infrastructure.EF;
 using Microsoft.EntityFrameworkCore;
@@ -15,6 +16,7 @@ public static class DependencyInjection
             .AddScoped<ICustomerRepository, SqlCustomerRepository>()
             .AddDbConfigurations()
             .AddEntityFrameworkInMemory()
+            .AddScoped<IUnitOfWork, UnitOfWork>()
             //.AddDbContext<BootstrapDbContext>()
             ;
 
@@ -31,7 +33,7 @@ public static class DependencyInjection
         return services;
     }
 
-    public static void AddEntityFrameworkInMemory(this IServiceCollection services)
+    public static IServiceCollection AddEntityFrameworkInMemory(this IServiceCollection services)
     {
         var databaseName = Guid.NewGuid()
             .ToString();
@@ -46,5 +48,7 @@ public static class DependencyInjection
             options.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
             options.UseInternalServiceProvider(serviceProvider);
         });
+
+        return services;
     }
 }

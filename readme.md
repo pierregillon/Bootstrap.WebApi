@@ -6,6 +6,9 @@ Solution scafolding to quickly bootstrap an API.
 - Command and Query Segregation (CQS) using Mediator
 - Event driven architecture
 
+## Infrastructure
+- TransactionScope
+
 ## Testability
 - Acceptance test using Specflow on top of api
 
@@ -17,4 +20,4 @@ Solution scafolding to quickly bootstrap an API.
 
 ## Telemetry [todo]
 ## Feature Management [todo]
-## Transaction scope [todo]
+## Database migration [todo]
