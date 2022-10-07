@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.Testing;
+using Microsoft.AspNetCore.Mvc.Testing;
 using TechTalk.SpecFlow;
 
 namespace Bootstrap.Tests.Acceptance;

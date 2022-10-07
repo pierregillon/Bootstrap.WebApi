@@ -1,4 +1,5 @@
-﻿using Bootstrap.Domain;
+using Bootstrap.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace Bootstrap.Infrastructure;
 
@@ -8,20 +9,37 @@ internal class SqlCustomerRepository : ICustomerRepository
 
     public SqlCustomerRepository(BootstrapDbContext dbContext)
     {
-        _dbContext = dbContext;
+        this._dbContext = dbContext;
     }
 
-    public Task Save(Customer customer)
+    public async Task<Customer> Get(Guid customerId)
     {
-        _dbContext.Customers.Add(new CustomerEntity
+        var entity = await this._dbContext.Customers.SingleOrDefaultAsync(x => x.Id == customerId);
+        if (entity is null)
         {
-            Id = customer.Id,
-            FirstName = customer.FirstName,
-            LastName = customer.LastName
-        });
+            throw new InvalidOperationException($"Cannot found the user with id {customerId}");
+        }
 
-        _dbContext.SaveChanges();
+        return Customer.Rehydrate(entity.Id, entity.FirstName, entity.LastName);
+    }
 
-        return Task.CompletedTask;
+    public async Task Save(Customer customer)
+    {
+        var entity = await this._dbContext.Customers.FindAsync(customer.Id);
+        if (entity is null)
+        {
+            this._dbContext.Customers.Add(
+                new CustomerEntity
+                {
+                    Id = customer.Id, FirstName = customer.FirstName, LastName = customer.LastName
+                });
+        }
+        else
+        {
+            entity.FirstName = customer.FirstName;
+            entity.LastName = customer.LastName;
+        }
+
+        await this._dbContext.SaveChangesAsync();
     }
 }

@@ -30,6 +30,7 @@ app.UseAuthorization();
 app.MapControllers();
 
 app.Run();
+
 namespace Bootstrap.WebApi
 {
     public partial class Program { }

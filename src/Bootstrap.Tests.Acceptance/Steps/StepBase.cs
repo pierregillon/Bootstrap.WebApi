@@ -1,15 +1,13 @@
-﻿using TechTalk.SpecFlow;
+using Bootstrap.Tests.Acceptance.Utils;
 
 namespace Bootstrap.Tests.Acceptance.Steps;
 
 public abstract class StepBase
 {
-    private readonly ScenarioContext _context;
+    protected readonly TestClient Client;
 
-    protected StepBase(ScenarioContext context)
+    protected StepBase(TestClient client)
     {
-        _context = context;
+        this.Client = client;
     }
-
-    public HttpClient Client => _context.Get<HttpClient>();
 }
