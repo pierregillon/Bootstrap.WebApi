@@ -13,7 +13,7 @@ Solution scafolding to quickly bootstrap an API.
 - Acceptance test using Specflow on top of api
 
 ## Api
-- Versioning
+- Url versioning
 - Swagger
 - Problem details
 - Health check

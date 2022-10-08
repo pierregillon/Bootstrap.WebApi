@@ -65,9 +65,16 @@ public class TestClient
         {
             var problemDetailsJson = await response.Content.ReadAsStringAsync();
 
-            var problemDetails = Deserialize<ProblemDetails>(problemDetailsJson);
+            if (string.IsNullOrWhiteSpace(problemDetailsJson))
+            {
+                throw HttpException.From(path, response.StatusCode);
+            }
+            else
+            {
+                var problemDetails = Deserialize<ProblemDetails>(problemDetailsJson);
 
-            throw new HttpException(path, problemDetails);
+                throw HttpException.From(path, problemDetails);
+            }
         }
     }
 }

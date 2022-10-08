@@ -16,6 +16,11 @@ Scenario: Renaming a customer can list the new name
 		| Albert Rose |
 
 @ErrorHandling
+Scenario: Cannot rename with empty first name or lastname
+	When I rename the customer "John Doe" to "  "
+	Then a bad request error occurred
+
+@ErrorHandling
 Scenario: Cannot rename an unknown customer
 	When I rename an unknown customer to "Albert Rose"
 	Then an internal server error error occurred with message "Cannot found the user with id (.*)"
