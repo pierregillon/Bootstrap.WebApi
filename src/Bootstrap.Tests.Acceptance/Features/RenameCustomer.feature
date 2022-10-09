@@ -24,3 +24,8 @@ Scenario: Cannot rename with empty first name or lastname
 Scenario: Cannot rename an unknown customer
 	When I rename an unknown customer to "Albert Rose"
 	Then an internal server error error occurred with message "Cannot found the user with id (.*)"
+
+@Integration
+Scenario: Renaming a customer has is name well updated in the list
+	When I rename the customer "John Doe" to "Albert Rose"
+	Then the "John Doe" customer is now listed with full name "Albert Rose"

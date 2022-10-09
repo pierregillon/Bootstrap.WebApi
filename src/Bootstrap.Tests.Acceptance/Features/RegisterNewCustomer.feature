@@ -11,3 +11,10 @@ Scenario: Initializing new customer lists it
 	Then the customer list is
 		| Full name |
 		| John Doe  |
+
+@Integration
+Scenario: List the just created user
+	When I register the following new customer
+		| First name | Last name |
+		| John       | Doe       |
+	Then the "John Doe" customer is listed

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Bootstrap.Infrastructure.EF;
+namespace Bootstrap.Infrastructure.Database;
 
 internal static class DbContextExtensions
 {
@@ -16,7 +16,7 @@ internal static class DbContextExtensions
             sqlOptions =>
             {
                 sqlOptions.CommandTimeout(60 * 60);
-                sqlOptions.EnableRetryOnFailure(25, TimeSpan.FromSeconds(2), null);
+                //sqlOptions.EnableRetryOnFailure(25, TimeSpan.FromSeconds(2), null);
             }
         );
 

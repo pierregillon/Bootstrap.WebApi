@@ -30,6 +30,26 @@ public class ErrorDriver
         }
     }
 
+    public async Task<TResult> TryExecute<TResult>(Func<Task<TResult>> action)
+    {
+        if (!InErrorScenario)
+        {
+            return await action();
+        }
+        else
+        {
+            try
+            {
+                return await action();
+            }
+            catch (HttpException ex)
+            {
+                _errors.Enqueue(new HttpError(ex));
+                return default!;
+            }
+        }
+    }
+
     public HttpError GetLastError()
     {
         if (!_errors.TryDequeue(out var error))

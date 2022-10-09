@@ -18,13 +18,17 @@ public class TestClient
 
     private HttpClient HttpClient => _context.Get<HttpClient>();
 
-    public async Task Post(string path, object body) =>
+    public async Task<Guid> Post(string path, object body) =>
         await _errorDriver.TryExecute(
             async () =>
             {
                 var response = await HttpClient.PostAsync(path, ToStringContent(body));
 
                 await ProcessError(path, response);
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                return Deserialize<Guid>(json);
             });
 
     public async Task Put(string path, object body) =>

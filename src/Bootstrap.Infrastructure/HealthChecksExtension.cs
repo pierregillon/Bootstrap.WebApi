@@ -1,4 +1,4 @@
-﻿using Bootstrap.Infrastructure.EF;
+﻿using Bootstrap.Infrastructure.Database;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 

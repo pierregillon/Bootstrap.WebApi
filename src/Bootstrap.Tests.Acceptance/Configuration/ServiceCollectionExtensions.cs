@@ -1,10 +1,9 @@
-﻿using Bootstrap.Infrastructure;
-using Bootstrap.Infrastructure.EF;
+﻿using Bootstrap.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Bootstrap.Tests.Acceptance.Utils;
+namespace Bootstrap.Tests.Acceptance.Configuration;
 
 public static class ServiceCollectionExtensions
 {

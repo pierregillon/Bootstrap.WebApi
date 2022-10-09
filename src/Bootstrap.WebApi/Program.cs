@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Application;
 using Bootstrap.BuildingBlocks;
 using Bootstrap.Infrastructure;
+using Bootstrap.Infrastructure.DatabaseMigration;
 using Bootstrap.WebApi.Configuration;
 using Bootstrap.WebApi.Configuration.Swagger;
 
@@ -16,6 +17,7 @@ builder.Services
     .RegisterBuildingBlocks()
     .RegisterApplication()
     .RegisterInfrastructure()
+    .RegisterDatabaseMigration()
     ;
 
 builder.Services
@@ -31,11 +33,10 @@ app
 app.UseAuthorization();
 app.MapControllers();
 
+app.MigrationRunner().MigrateUp();
 app.Run();
 
 namespace Bootstrap.WebApi
 {
-    public partial class Program
-    {
-    }
+    public partial class Program { }
 }

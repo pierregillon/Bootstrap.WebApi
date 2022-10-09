@@ -8,6 +8,8 @@ namespace Bootstrap.Tests.Acceptance.Steps;
 [Binding]
 public class CustomerSteps : StepBase
 {
+    private readonly IDictionary<Guid, CustomerSpecflowData> _customers = new Dictionary<Guid, CustomerSpecflowData>();
+
     public CustomerSteps(TestClient client) : base(client)
     {
     }
@@ -18,31 +20,29 @@ public class CustomerSteps : StepBase
     {
         var data = table.CreateInstance<CustomerSpecflowData>();
 
-        await Client.Post("v1/customers", new {firstName = data.FirstName, lastName = data.LastName});
+        var customerId = await Client.Post("v1/customers", new {firstName = data.FirstName, lastName = data.LastName});
+
+        _customers.Add(customerId, data);
     }
 
     [When(@"I rename the customer ""([^""]*)"" to ""([^""]*)""")]
     public async Task WhenIRenameTheCustomerTo(string originalFullName, string newFullName)
     {
-        var customers = await Client.Get<IEnumerable<CustomerListItemSpecflowData>>("v1/customers");
+        var customerId = GetJustCreatedCustomerIdFromFullName(originalFullName);
 
-        var customer = customers.Single(x => x.FullName == originalFullName);
+        var split = newFullName.Split(' ');
+        var firstName = split.First();
+        var lastName = split.Last();
 
-        var firstName = newFullName.Split(' ')
-            .First();
-        var lastName = newFullName.Split(' ')
-            .Last();
-
-        await Client.Put($"v1/customers/{customer.Id}/rename", new {firstName, lastName});
+        await Client.Put($"v1/customers/{customerId}/rename", new {firstName, lastName});
     }
 
     [When(@"I rename an unknown customer to ""([^""]*)""")]
     public async Task WhenIRenameAnUnknownCustomerTo(string newFullName)
     {
-        var firstName = newFullName.Split(' ')
-            .First();
-        var lastName = newFullName.Split(' ')
-            .Last();
+        var split = newFullName.Split(' ');
+        var firstName = split.First();
+        var lastName = split.Last();
 
         await Client.Put($"v1/customers/{Guid.NewGuid()}/rename", new {firstName, lastName});
     }
@@ -57,6 +57,39 @@ public class CustomerSteps : StepBase
         actualCustomers
             .Should()
             .BeEquivalentTo(expectedCustomers, options => options.Excluding(x => x.Id));
+    }
+
+    [Then(@"the ""([^""]*)"" customer is now listed with full name ""([^""]*)""")]
+    public async Task ThenTheCustomerNowIsListedWithFullName(string originalFullName, string newFullName)
+    {
+        var customerId = this.GetJustCreatedCustomerIdFromFullName(originalFullName);
+
+        var actualCustomers = await Client.Get<IEnumerable<CustomerListItemSpecflowData>>("v1/customers");
+
+        actualCustomers
+            .Single(x => x.Id == customerId)
+            .FullName
+            .Should()
+            .Be(newFullName);
+    }
+
+    [Then(@"the ""([^""]*)"" customer is listed")]
+    public async Task ThenTheCustomerIsListed(string fullName)
+    {
+        var customerId = this.GetJustCreatedCustomerIdFromFullName(fullName);
+
+        var actualCustomers = await Client.Get<IEnumerable<CustomerListItemSpecflowData>>("v1/customers");
+
+        actualCustomers
+            .Should()
+            .Contain(x => x.Id == customerId);
+    }
+
+    private Guid GetJustCreatedCustomerIdFromFullName(string originalFullName)
+    {
+        var customer = _customers.Single(x => x.Value.FirstName + " " + x.Value.LastName == originalFullName);
+
+        return customer.Key;
     }
 }
 

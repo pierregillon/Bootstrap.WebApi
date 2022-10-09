@@ -31,9 +31,10 @@ public class CustomerController : ControllerBase
     [ProducesResponseType(StatusCodes.Status400BadRequest)]
     public async Task<IActionResult> RegisterNewCustomer([Required] NameBody body)
     {
-        await _commandDispatcher.Dispatch(new RegisterNewCustomerCommand(body.FirstName, body.LastName));
-
-        return this.CreatedAtAction(nameof(this.ListCustomers), new{});
+        var customerId = await _commandDispatcher.Dispatch(new RegisterNewCustomerCommand(body.FirstName, body.LastName));
+        
+        return this.Created("", customerId);
+        //return this.CreatedAtAction(nameof(this.ListCustomers), new { Id = customerId });
     }
 
     [HttpPut("{id}/rename")]

@@ -1,5 +1,6 @@
 ﻿using Bootstrap.Domain.Customers;
-using Bootstrap.Infrastructure.EF;
+using Bootstrap.Infrastructure.Database;
+using Bootstrap.Infrastructure.Database.Tables;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bootstrap.Infrastructure.Customers;

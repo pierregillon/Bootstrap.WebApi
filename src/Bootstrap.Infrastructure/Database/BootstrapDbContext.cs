@@ -1,9 +1,10 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using Bootstrap.Infrastructure.Database.Tables;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Bootstrap.Infrastructure.EF;
+namespace Bootstrap.Infrastructure.Database;
 
 public class BootstrapDbContext : DbContext
 {
@@ -27,6 +28,7 @@ public class BootstrapDbContext : DbContext
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         var builder = optionsBuilder.UseNpgsql(_configuration);
+
         if (!_environment.IsDevelopment())
         {
             builder.UseLogging(_logger);

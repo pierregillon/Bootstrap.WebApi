@@ -1,6 +1,6 @@
 using Bootstrap.BuildingBlocks.Queries;
 using Bootstrap.Infrastructure;
-using Bootstrap.Infrastructure.EF;
+using Bootstrap.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 
 namespace Bootstrap.Application.Customers;

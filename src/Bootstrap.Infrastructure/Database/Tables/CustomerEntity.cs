@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Bootstrap.Infrastructure.EF;
+namespace Bootstrap.Infrastructure.Database.Tables;
 
 [Table("Customer")]
 public class CustomerEntity
