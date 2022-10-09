@@ -17,11 +17,9 @@ jobs:
       uses: actions/setup-dotnet@v3
       with:
         dotnet-version: 6.0.x
-    - name: Go to Src
-      run: cd src
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore ./src/Bootstrap.WebApi.sln
     - name: Build
-      run: dotnet build --no-restore
+      run: dotnet build ./src/Bootstrap.WebApi.sln --no-restore
     - name: Test
-      run: dotnet test --no-build --verbosity normal
+      run: dotnet test ./src/Bootstrap.WebApi.sln --no-build --verbosity normal
