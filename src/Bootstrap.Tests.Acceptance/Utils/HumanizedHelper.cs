@@ -1,4 +1,4 @@
-using System.Globalization;
+﻿using System.Globalization;
 using System.Reflection;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -21,32 +21,31 @@ public static class HumanizedHelper
         }
 
         return Enum.Parse(enumType, normalized, true);
-
     }
 
     public static bool TryParseEnum<T>(string humanizedString, out T result) where T : Enum
     {
-        object result1;
-        if (TryParseEnum(typeof(T), humanizedString, out result1))
+        if (TryParseEnum(typeof(T), humanizedString, out var result1))
         {
-            result = (T)result1;
+            result = (T)result1!;
             return true;
         }
 
-        result = default;
+        result = default!;
         return false;
     }
 
     public static bool TryParseEnum(Type enumType, string humanizedString, out object? result)
     {
         var normalized = FromHumanizedToNormalized(humanizedString);
-        if ((!string.IsNullOrEmpty(normalized) ? 0 :
-                enumType.GetCustomAttribute(typeof(FlagsAttribute)) != null ? 1 : 0) == 0)
+        var isEnumFlag = enumType.GetCustomAttribute(typeof(FlagsAttribute)) != null;
+
+        if (!string.IsNullOrEmpty(normalized) || !isEnumFlag)
         {
             return Enum.TryParse(enumType, normalized, true, out result);
         }
-
-        result = Activator.CreateInstance(enumType);
+        
+        result = Activator.CreateInstance(enumType) ?? throw new InvalidOperationException($"Unable to instanciate {enumType}");
         return true;
     }
 

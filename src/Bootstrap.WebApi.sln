@@ -17,12 +17,15 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Tests.Acceptance"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DA1AE890-37B4-4B5A-96F7-2657C4F6D827}"
 	ProjectSection(SolutionItems) = preProject
+		..\.editorconfig = ..\.editorconfig
 		..\readme.md = ..\readme.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{B85DDC8B-F1E7-461F-AED8-B63CAC07D21F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Tests.Unit", "Bootstrap.Tests.Unit\Bootstrap.Tests.Unit.csproj", "{2191B4D8-DBDF-4862-A364-274A3A5A0030}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Tests.Unit", "Bootstrap.Tests.Unit\Bootstrap.Tests.Unit.csproj", "{2191B4D8-DBDF-4862-A364-274A3A5A0030}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blocks", "Blocks", "{47628DBD-18A4-4B00-A5DF-ED962EFA865B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +66,7 @@ Global
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
+		{0F740627-1FD2-4671-893B-76A78A82EF5C} = {47628DBD-18A4-4B00-A5DF-ED962EFA865B}
 		{0F7A3949-C4F1-4BB3-8BD5-9577CED1B8EE} = {B85DDC8B-F1E7-461F-AED8-B63CAC07D21F}
 		{2191B4D8-DBDF-4862-A364-274A3A5A0030} = {B85DDC8B-F1E7-461F-AED8-B63CAC07D21F}
 	EndGlobalSection
