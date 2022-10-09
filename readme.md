@@ -6,19 +6,21 @@ Solution scafolding to quickly bootstrap an API.
 - Command and Query Segregation (CQS) using Mediator
 - Event driven architecture
 
-## Infrastructure
-- TransactionScope
-
-## Testability
-- Acceptance test using Specflow on top of api
-
 ## Api
 - Url versioning
 - Swagger
 - Problem details
 - Health check
 
+## Infrastructure
+- EntityFramework
+- TransactionScope
+- Database migration with FluentMigrator
+
+## Testability
+- Unit tests with XUnit & FluentAssertions
+- Acceptance tests using Specflow on top of api
+- Integration by only annotating ```@Integration``` some of acceptance tests
+
 ## Telemetry [todo]
 ## Feature Management [todo]
-## Database migration [todo]
-## CI [todo]
