@@ -1,4 +1,4 @@
-namespace Bootstrap.Domain.Customers;
+﻿namespace Bootstrap.Domain.Customers;
 
 public class Customer
 {
@@ -18,6 +18,14 @@ public class Customer
 
     public void Rename(string firstName, string lastName)
     {
+        if (string.IsNullOrWhiteSpace(firstName))
+        {
+            throw new ArgumentException("Value cannot be null or whitespace.", nameof(firstName));
+        }
+        if (string.IsNullOrWhiteSpace(lastName))
+        {
+            throw new ArgumentException("Value cannot be null or whitespace.", nameof(lastName));
+        }
         FirstName = firstName;
         LastName = lastName;
     }

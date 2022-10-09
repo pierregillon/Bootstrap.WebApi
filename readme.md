@@ -21,3 +21,4 @@ Solution scafolding to quickly bootstrap an API.
 ## Telemetry [todo]
 ## Feature Management [todo]
 ## Database migration [todo]
+## CI [todo]
