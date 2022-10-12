@@ -2,18 +2,18 @@
 Solution scafolding to quickly bootstrap an API.
 
 ## Global pattern
-- Hexagonal architecture
-- Command and Query Segregation (CQS) using Mediator
-- Event driven architecture
+- [Hexagonal architecture](https://en.m.wikipedia.org/wiki/Hexagonal_architecture_(software))
+- [Command and Query Segregation (CQS)](https://www.martinfowler.com/bliki/CommandQuerySeparation.html) using Mediator
+- In memory [Event driven architecture](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven)
 
 ## Api
-- Url versioning
-- Swagger
-- Problem details
-- Health check
+- [Url versioning](https://restfulapi.net/versioning)
+- [Swagger](https://swagger.io/)
+- [Problem details](https://problemdetails.com/)
+- [Health check](https://microservices.io/patterns/observability/health-check-api.html)
 
 ## Infrastructure
-- EntityFramework
+- [EntityFramework](https://learn.microsoft.com/en-us/aspnet/entity-framework)
 - TransactionScope
 - Database migration with FluentMigrator
 
