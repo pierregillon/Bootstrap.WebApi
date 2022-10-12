@@ -3,7 +3,7 @@ Solution scafolding to quickly bootstrap an API.
 
 ## Global pattern
 - [Hexagonal architecture](https://en.m.wikipedia.org/wiki/Hexagonal_architecture_(software))
-- [Command and Query Segregation (CQS)](https://www.martinfowler.com/bliki/CommandQuerySeparation.html) using Mediator
+- [Command and Query Segregation (CQS)](https://www.martinfowler.com/bliki/CommandQuerySeparation.html) using [Mediator](https://github.com/jbogard/MediatR)
 - In memory [Event driven architecture](https://learn.microsoft.com/en-us/azure/architecture/guide/architecture-styles/event-driven)
 
 ## Api
@@ -14,7 +14,7 @@ Solution scafolding to quickly bootstrap an API.
 
 ## Infrastructure
 - [EntityFramework](https://learn.microsoft.com/en-us/aspnet/entity-framework)
-- TransactionScope
+- [TransactionScope](https://www.codeproject.com/articles/690136/all-about-transactionscope)
 - Database migration with FluentMigrator
 
 ## Testability
