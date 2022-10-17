@@ -18,6 +18,8 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{DA1AE890-37B4-4B5A-96F7-2657C4F6D827}"
 	ProjectSection(SolutionItems) = preProject
 		..\.editorconfig = ..\.editorconfig
+		..\docker-compose.yml = ..\docker-compose.yml
+		..\Dockerfile = ..\Dockerfile
 		..\.github\workflows\dotnet.yml = ..\.github\workflows\dotnet.yml
 		..\readme.md = ..\readme.md
 	EndProjectSection
@@ -28,7 +30,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Tests.Unit", "Boo
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blocks", "Blocks", "{47628DBD-18A4-4B00-A5DF-ED962EFA865B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Infrastructure.DatabaseMigration", "Bootstrap.Infrastructure.DatabaseMigration\Bootstrap.Infrastructure.DatabaseMigration.csproj", "{5509E99C-180A-4AB7-A2DE-D7E7EF368248}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Infrastructure.DatabaseMigration", "Bootstrap.Infrastructure.DatabaseMigration\Bootstrap.Infrastructure.DatabaseMigration.csproj", "{5509E99C-180A-4AB7-A2DE-D7E7EF368248}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

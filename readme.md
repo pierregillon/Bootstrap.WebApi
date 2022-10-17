@@ -66,7 +66,7 @@ Scenario: Renaming a customer has his name well updated in the list
 	Then the "John Doe" customer is now listed with full name "Albert Rose"
 ```
 ## Image build and deployment
-- Containerization with [Dockerfile](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows) [todo]
+- Containerization with [Dockerfile](https://learn.microsoft.com/en-us/dotnet/core/docker/build-container?tabs=windows) & Docker compose
 - Basic github action to trigger CI [dotnet.yml](.github/workflows/dotnet.yml)
 
 ## Observability
