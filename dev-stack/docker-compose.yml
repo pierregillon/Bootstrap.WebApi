@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   api:
-    image: bootstrap.api
+    image: ghcr.io/pierregillon/bootstrap.api:sha-22ae46d
     container_name: bootstrap.api
     environment:
         Database__Host: host.docker.internal
