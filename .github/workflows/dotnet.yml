@@ -11,24 +11,24 @@ on:
     branches: [ "main" ]
 
 jobs:
-  #build_and_tests:
-  #  runs-on: ubuntu-latest
-  #  steps:
-  #  - uses: actions/checkout@v3
-  #  - name: Setup .NET
-  #    uses: actions/setup-dotnet@v3
-  #    with:
-  #      dotnet-version: 6.0.x
-  #  - name: Restore dependencies
-  #    run: dotnet restore ./src/Bootstrap.WebApi.sln
-  #  - name: Build
-  #    run: dotnet build ./src/Bootstrap.WebApi.sln --no-restore
-  #  - name: Test
-  #    run: dotnet test ./src/Bootstrap.WebApi.sln --no-build --verbosity normal
+  build_and_tests:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v3
+      with:
+        dotnet-version: 6.0.x
+    - name: Restore dependencies
+      run: dotnet restore ./src/Bootstrap.WebApi.sln
+    - name: Build
+      run: dotnet build ./src/Bootstrap.WebApi.sln --no-restore
+    - name: Test
+      run: dotnet test ./src/Bootstrap.WebApi.sln --no-build --verbosity normal
 
   build-and-push-image:
     runs-on: ubuntu-latest
-    #needs: build_and_tests
+    needs: build_and_tests
     permissions:
       contents: read
       packages: write
@@ -44,21 +44,6 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      #- name: Extract metadata (tags, labels) for Docker
-      #  id: meta
-      #  uses: docker/metadata-action@v4
-      #  with:
-      #    images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
-      #    tags: type=sha
-
-      #- name: Build and push Docker image
-      #  uses: docker/build-push-action@v3
-      #  with:
-      #    context: .
-      #    push: true
-      #    tags: ${{ steps.meta.outputs.tags }}
-      #    labels: ${{ steps.meta.outputs.labels }}
-
       - name: Build and push Docker image
         uses: docker/build-push-action@v3
         with:
@@ -66,10 +51,12 @@ jobs:
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
 
-  deploy:
+  deploy-preprod:
     runs-on: ubuntu-latest
     needs: build-and-push-image
-    
+    environment:
+      name: 'Preprod'
+      url: https://bootstrap-web-api.agreeablehill-f23c6ec4.australiaeast.azurecontainerapps.io 
     steps:
       - name: Azure Login
         uses: azure/login@v1
@@ -83,7 +70,29 @@ jobs:
             az config set extension.use_dynamic_install=yes_without_prompt
             #az containerapp registry set -n tasksmanager-backend-api -g tasks-tracker-rg --server taskstrackeracr.azurecr.io --username  ${{ secrets.TASKSMANAGER_REGISTRY_USERNAME }} --password ${{ secrets.TASKSMANAGER_REGISTRY_PASSWORD }}
             az containerapp update -n bootstrap-web-api -g ${{ secrets.AZURE_RESOURCE_GROUP }} --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-  #deploy:
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    needs: deploy-preprod
+    environment:
+      name: 'Prod'
+      url: https://bootstrap-web-api-prod.agreeablehill-f23c6ec4.australiaeast.azurecontainerapps.io/
+    steps:
+      - name: Azure Login
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+ 
+      - name: Deploy to containerapp
+        uses: azure/CLI@v1
+        with:
+          inlineScript: |
+            az config set extension.use_dynamic_install=yes_without_prompt
+            #az containerapp registry set -n tasksmanager-backend-api -g tasks-tracker-rg --server taskstrackeracr.azurecr.io --username  ${{ secrets.TASKSMANAGER_REGISTRY_USERNAME }} --password ${{ secrets.TASKSMANAGER_REGISTRY_PASSWORD }}
+            az containerapp update -n bootstrap-web-api-prod -g ${{ secrets.AZURE_RESOURCE_GROUP }} --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
+  
+            
+#deploy:
   #  runs-on: ubuntu-latest
   #  needs: build-and-push-image
 
@@ -102,7 +111,3 @@ jobs:
   #        app-name: ${{ env.AZURE_WEBAPP_NAME }}
   #        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
   #        images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
-
-
-  # https://bitoftech.net/2022/09/13/continuous-deployment-for-azure-container-apps-using-github-actions-part-9/
-  # https://learn.microsoft.com/en-us/azure/container-apps/github-actions-cli?tabs=powershell
