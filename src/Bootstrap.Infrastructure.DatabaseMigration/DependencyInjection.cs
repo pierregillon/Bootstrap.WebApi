@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Infrastructure.Database;
 using Bootstrap.Infrastructure.DatabaseMigration.Migrations.Utils;
 using FluentMigrator.Runner;
+using FluentMigrator.Runner.Initialization;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Options;
 
@@ -20,6 +21,9 @@ public static class DependencyInjection
     public static IServiceCollection ConfigureFluentMigrator(this IServiceCollection services) =>
         services
             .AddFluentMigratorCore()
+            .Configure<RunnerOptions>(opt => {
+                opt.TransactionPerSession = false;
+            })
             .ConfigureRunner(
                 builder => builder
                     .AddPostgres()

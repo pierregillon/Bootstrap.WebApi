@@ -13,7 +13,7 @@ public class CustomerTests
     [InlineData("  ")]
     public void Renaming_a_customer_requires_a_non_empty_first_name(string emptyFirstName)
     {
-        Customer customer = A.Customer;
+        Customer customer = A.Customer.Named("John", "Doe");
 
         var action = () => customer.Rename(emptyFirstName, "some last name");
 

@@ -11,4 +11,11 @@ public class CustomerBuilder
     private Customer Build() => Customer.Rehydrate(id, firstName, lastName);
 
     public static implicit operator Customer(CustomerBuilder builder) => builder.Build();
+
+    public CustomerBuilder Named(string firstName, string lastName)
+    {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        return this;
+    }
 }

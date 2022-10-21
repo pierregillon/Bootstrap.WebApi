@@ -1,4 +1,5 @@
-﻿using Bootstrap.Domain.Customers;
+﻿using System.Text.Json;
+using Bootstrap.Domain.Customers;
 using Bootstrap.Infrastructure.Database;
 using Bootstrap.Infrastructure.Database.Tables;
 using Microsoft.EntityFrameworkCore;
@@ -18,7 +19,7 @@ internal class SqlCustomerRepository : ICustomerRepository
         {
             throw new InvalidOperationException($"Cannot found the user with id {customerId}");
         }
-
+        
         return Customer.Rehydrate(entity.Id, entity.FirstName, entity.LastName);
     }
 
