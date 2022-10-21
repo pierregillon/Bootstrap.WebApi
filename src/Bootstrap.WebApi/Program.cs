@@ -21,7 +21,8 @@ builder.Services
     ;
 
 builder.Services
-    .AddServiceHealthChecks();
+    .AddServiceHealthChecks()
+    .AddApplicationInsightsTelemetry();
 
 var app = builder.Build();
 
