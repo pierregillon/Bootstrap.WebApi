@@ -12,7 +12,7 @@ public record CustomerListItemDto(Guid Id, string FullName);
 internal class ListCustomersHandler : IQueryHandler<ListCustomersQuery, IReadOnlyCollection<CustomerListItemDto>>
 {
     private readonly BootstrapDbContext _dbContext;
-
+    
     public ListCustomersHandler(BootstrapDbContext dbContext) => _dbContext = dbContext;
 
     public async Task<IReadOnlyCollection<CustomerListItemDto>> Handle(ListCustomersQuery command) =>
