@@ -12,21 +12,16 @@ public static class ServiceCollectionExtensions
         var databaseName = Guid.NewGuid()
             .ToString();
 
-        var serviceProvider = new ServiceCollection()
-            .AddEntityFrameworkInMemoryDatabase()
-            .BuildServiceProvider();
-
         services.RemoveWhere(x => x.ServiceType == typeof(DbContextOptions<BootstrapDbContext>));
 
         services.AddDbContext<BootstrapDbContext>(options =>
         {
             options.UseInMemoryDatabase(databaseName);
             options.ConfigureWarnings(x => x.Ignore(InMemoryEventId.TransactionIgnoredWarning));
-            options.UseInternalServiceProvider(serviceProvider);
         });
     }
 
-    public static void RemoveWhere(this IServiceCollection services, Func<ServiceDescriptor, bool> filter)
+    private static void RemoveWhere(this IServiceCollection services, Func<ServiceDescriptor, bool> filter)
     {
         var toRemove = services.Where(filter)
             .ToArray();

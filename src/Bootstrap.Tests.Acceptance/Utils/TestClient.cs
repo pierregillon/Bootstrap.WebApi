@@ -16,6 +16,10 @@ public class TestClient
         _errorDriver = errorDriver;
     }
 
+    public string? CurrentToken { get; private set; }
+
+    public string? CurrentEmailAddress { get; private set; }
+
     private HttpClient HttpClient => _context.Get<HttpClient>();
 
     public async Task<Guid> Post(string path, object body) =>
@@ -29,6 +33,19 @@ public class TestClient
                 var json = await response.Content.ReadAsStringAsync();
 
                 return Deserialize<Guid>(json);
+            });
+
+    public async Task<T> Post<T>(string path, object body) =>
+        await _errorDriver.TryExecute(
+            async () =>
+            {
+                var response = await HttpClient.PostAsync(path, ToStringContent(body));
+
+                await ProcessError(path, response);
+
+                var json = await response.Content.ReadAsStringAsync();
+
+                return Deserialize<T>(json);
             });
 
     public async Task Put(string path, object body) =>
@@ -50,7 +67,7 @@ public class TestClient
 
     private static T Deserialize<T>(string json)
     {
-        var options = new JsonSerializerOptions {PropertyNameCaseInsensitive = true};
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
 
         return JsonSerializer.Deserialize<T>(json, options) ??
                throw new InvalidOperationException($"Unable to deserialize the response to {typeof(T)}");
@@ -73,12 +90,22 @@ public class TestClient
             {
                 throw HttpException.From(path, response.StatusCode);
             }
-            else
-            {
-                var problemDetails = Deserialize<ProblemDetails>(problemDetailsJson);
 
-                throw HttpException.From(path, problemDetails);
-            }
+            var problemDetails = Deserialize<ProblemDetails>(problemDetailsJson);
+
+            throw HttpException.From(path, problemDetails);
         }
     }
+
+    public void DefineToken(string emailAddress, string bearerToken)
+    {
+        CurrentEmailAddress = emailAddress;
+        CurrentToken = bearerToken;
+
+        ClearToken();
+
+        HttpClient.DefaultRequestHeaders.Add("Authorization", $"Bearer {bearerToken}");
+    }
+
+    private void ClearToken() => HttpClient.DefaultRequestHeaders.Remove("Authorization");
 }

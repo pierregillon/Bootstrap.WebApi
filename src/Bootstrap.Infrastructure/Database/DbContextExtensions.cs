@@ -16,7 +16,6 @@ internal static class DbContextExtensions
             sqlOptions =>
             {
                 sqlOptions.CommandTimeout(60 * 60);
-                //sqlOptions.EnableRetryOnFailure(25, TimeSpan.FromSeconds(2), null);
             }
         );
 

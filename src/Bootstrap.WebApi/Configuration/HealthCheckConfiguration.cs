@@ -1,4 +1,4 @@
-﻿using Bootstrap.Infrastructure;
+﻿using Bootstrap.Infrastructure.Database;
 using HealthChecks.UI.Client;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -7,9 +7,8 @@ namespace Bootstrap.WebApi.Configuration;
 
 public static class HealthCheckConfiguration
 {
-    public static IApplicationBuilder UseHealthChecksRoutes(this IApplicationBuilder builder)
-    {
-        return builder
+    public static IApplicationBuilder UseHealthChecksRoutes(this IApplicationBuilder builder) =>
+        builder
             .UseHealthChecks(
                 "/liveness",
                 new HealthCheckOptions
@@ -38,7 +37,6 @@ public static class HealthCheckConfiguration
                     }
                 }
             );
-    }
 
     public static IServiceCollection AddServiceHealthChecks(this IServiceCollection services)
     {
@@ -50,14 +48,13 @@ public static class HealthCheckConfiguration
         return services;
     }
 
-    private static IHealthChecksBuilder AddLivenessChecks(this IHealthChecksBuilder builder)
-    {
-        return builder.AddCheck(
+    private static IHealthChecksBuilder AddLivenessChecks(this IHealthChecksBuilder builder) =>
+        builder.AddCheck(
             "Api liveness check",
             () => HealthCheckResult.Healthy("the service is staying alive! Disco!"),
-            new[] {"api", "liveness"}
+            new[] { "api", "liveness" }
         );
-    }
 
-    private static IHealthChecksBuilder AddReadinessChecks(this IHealthChecksBuilder builder) => builder.AddDatabaseCheck();
+    private static IHealthChecksBuilder AddReadinessChecks(this IHealthChecksBuilder builder) =>
+        builder.AddDatabaseCheck();
 }

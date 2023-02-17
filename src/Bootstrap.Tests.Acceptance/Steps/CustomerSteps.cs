@@ -1,4 +1,5 @@
-﻿using Bootstrap.Tests.Acceptance.Utils;
+﻿using Bootstrap.Tests.Acceptance.Configuration;
+using Bootstrap.Tests.Acceptance.Utils;
 using FluentAssertions;
 using TechTalk.SpecFlow;
 using TechTalk.SpecFlow.Assist;
@@ -10,7 +11,7 @@ public class CustomerSteps : StepBase
 {
     private readonly IDictionary<Guid, CustomerSpecflowData> _customers = new Dictionary<Guid, CustomerSpecflowData>();
 
-    public CustomerSteps(TestClient client) : base(client)
+    public CustomerSteps(TestClient client, TestApplication application) : base(client, application)
     {
     }
 

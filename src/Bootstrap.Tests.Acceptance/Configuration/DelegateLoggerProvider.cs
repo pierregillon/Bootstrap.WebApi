@@ -50,7 +50,7 @@ public sealed class DelegateLoggerProvider : ILoggerProvider, ISupportExternalSc
             _loggerDelegate = loggerDelegate;
         }
 
-        public IDisposable BeginScope<TState>(TState state) => ScopeProvider?.Push(state) ?? NullScope.Instance;
+        public IDisposable BeginScope<TState>(TState state) where TState : notnull => ScopeProvider?.Push(state) ?? NullScope.Instance;
 
         public bool IsEnabled(LogLevel logLevel) => true;
 

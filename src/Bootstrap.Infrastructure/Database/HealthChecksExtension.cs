@@ -1,8 +1,7 @@
-﻿using Bootstrap.Infrastructure.Database;
-using Microsoft.Extensions.DependencyInjection;
+﻿using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
 
-namespace Bootstrap.Infrastructure;
+namespace Bootstrap.Infrastructure.Database;
 
 public static class HealthChecksExtension
 {

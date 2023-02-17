@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.Extensions.Options;
-using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace Bootstrap.WebApi.Configuration.Swagger;
@@ -20,5 +19,5 @@ public class ConfigureSwaggerUIOptions : IConfigureNamedOptions<SwaggerUIOptions
         }
     }
 
-    public void Configure(string name, SwaggerUIOptions options) => Configure(options);
+    public void Configure(string? name, SwaggerUIOptions options) => Configure(options);
 }
