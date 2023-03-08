@@ -14,17 +14,17 @@ jobs:
   build_and_tests:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v3
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v3
-      with:
-        dotnet-version: 6.0.x
-    - name: Restore dependencies
-      run: dotnet restore ./src/Bootstrap.WebApi.sln
-    - name: Build
-      run: dotnet build ./src/Bootstrap.WebApi.sln --no-restore
-    - name: Test
-      run: dotnet test ./src/Bootstrap.WebApi.sln --no-build --verbosity normal
+      - uses: actions/checkout@v3
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: 6.0.x
+      - name: Restore dependencies
+        run: dotnet restore ./src/Bootstrap.WebApi.sln
+      - name: Build
+        run: dotnet build ./src/Bootstrap.WebApi.sln --no-restore
+      - name: Test
+        run: dotnet test ./src/Bootstrap.WebApi.sln --no-build --verbosity normal
 
   build-and-push-image:
     runs-on: ubuntu-latest
@@ -50,64 +50,3 @@ jobs:
           context: .
           push: true
           tags: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-  deploy-preprod:
-    runs-on: ubuntu-latest
-    needs: build-and-push-image
-    environment:
-      name: 'Preprod'
-      url: https://bootstrap-web-api.agreeablehill-f23c6ec4.australiaeast.azurecontainerapps.io 
-    steps:
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
- 
-      - name: Deploy to containerapp
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-            #az containerapp registry set -n tasksmanager-backend-api -g tasks-tracker-rg --server taskstrackeracr.azurecr.io --username  ${{ secrets.TASKSMANAGER_REGISTRY_USERNAME }} --password ${{ secrets.TASKSMANAGER_REGISTRY_PASSWORD }}
-            az containerapp update -n bootstrap-web-api -g ${{ secrets.AZURE_RESOURCE_GROUP }} --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-
-  deploy-prod:
-    runs-on: ubuntu-latest
-    needs: deploy-preprod
-    environment:
-      name: 'Prod'
-      url: https://bootstrap-web-api-prod.agreeablehill-f23c6ec4.australiaeast.azurecontainerapps.io/
-    steps:
-      - name: Azure Login
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
- 
-      - name: Deploy to containerapp
-        uses: azure/CLI@v1
-        with:
-          inlineScript: |
-            az config set extension.use_dynamic_install=yes_without_prompt
-            #az containerapp registry set -n tasksmanager-backend-api -g tasks-tracker-rg --server taskstrackeracr.azurecr.io --username  ${{ secrets.TASKSMANAGER_REGISTRY_USERNAME }} --password ${{ secrets.TASKSMANAGER_REGISTRY_PASSWORD }}
-            az containerapp update -n bootstrap-web-api-prod -g ${{ secrets.AZURE_RESOURCE_GROUP }} --image ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}:${{ github.sha }}
-  
-            
-#deploy:
-  #  runs-on: ubuntu-latest
-  #  needs: build-and-push-image
-
-  #  environment:
-  #    name: 'production'
-  #    url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
-
-  #  steps:
-  #    - name: Lowercase the repo name
-  #      run: echo "REPO=${GITHUB_REPOSITORY,,}" >>${GITHUB_ENV}
-
-  #    - name: Deploy to Azure Web App
-  #      id: deploy-to-webapp
-  #      uses: azure/webapps-deploy@0b651ed7546ecfc75024011f76944cb9b381ef1e
-  #      with:
-  #        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-  #        publish-profile: ${{ secrets.AZURE_WEBAPP_PUBLISH_PROFILE }}
-  #        images: 'ghcr.io/${{ env.REPO }}:${{ github.sha }}'
