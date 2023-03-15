@@ -1,16 +1,17 @@
 ﻿using System.Transactions;
-using Bootstrap.Infrastructure.Database;
 using MediatR;
 
-namespace Bootstrap.Infrastructure;
+namespace Bootstrap.Infrastructure.Database;
 
-internal class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse> where TRequest : IRequest<TResponse>
+internal class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequest, TResponse>
+    where TRequest : IRequest<TResponse>
 {
     private readonly BootstrapDbContext _dbContext;
 
     public UnitOfWorkBehavior(BootstrapDbContext dbContext) => _dbContext = dbContext;
 
-    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next, CancellationToken cancellationToken)
+    public async Task<TResponse> Handle(TRequest request, RequestHandlerDelegate<TResponse> next,
+        CancellationToken cancellationToken)
     {
         using var scope = BuildTransactionScope();
 
@@ -25,8 +26,8 @@ internal class UnitOfWorkBehavior<TRequest, TResponse> : IPipelineBehavior<TRequ
 
     private static TransactionScope BuildTransactionScope() =>
         new(
-            TransactionScopeOption.Required, 
-            new TransactionOptions {  IsolationLevel = IsolationLevel.ReadCommitted }, 
+            TransactionScopeOption.Required,
+            new TransactionOptions { IsolationLevel = IsolationLevel.ReadCommitted },
             TransactionScopeAsyncFlowOption.Enabled
         );
 }

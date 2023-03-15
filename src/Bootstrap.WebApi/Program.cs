@@ -1,6 +1,7 @@
 ﻿using Bootstrap.Application;
 using Bootstrap.BuildingBlocks;
 using Bootstrap.Infrastructure;
+using Bootstrap.Infrastructure.Database;
 using Bootstrap.Infrastructure.DatabaseMigration;
 using Bootstrap.WebApi.Configuration;
 using Bootstrap.WebApi.Configuration.Authentication;
@@ -20,6 +21,7 @@ builder.Services
     .RegisterBuildingBlocks()
     .RegisterApplication()
     .RegisterInfrastructure()
+    .RegisterDatabaseInfrastructure()
     .RegisterDatabaseMigration()
     ;
 

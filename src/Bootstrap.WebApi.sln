@@ -32,6 +32,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Blocks", "Blocks", "{47628D
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Bootstrap.Infrastructure.DatabaseMigration", "Bootstrap.Infrastructure.DatabaseMigration\Bootstrap.Infrastructure.DatabaseMigration.csproj", "{5509E99C-180A-4AB7-A2DE-D7E7EF368248}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Bootstrap.Infrastructure.Database", "Bootstrap.Infrastructure.Database\Bootstrap.Infrastructure.Database.csproj", "{C321184F-E40D-4E11-B1B6-6987C6B973BE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -70,6 +72,10 @@ Global
 		{5509E99C-180A-4AB7-A2DE-D7E7EF368248}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5509E99C-180A-4AB7-A2DE-D7E7EF368248}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5509E99C-180A-4AB7-A2DE-D7E7EF368248}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C321184F-E40D-4E11-B1B6-6987C6B973BE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C321184F-E40D-4E11-B1B6-6987C6B973BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C321184F-E40D-4E11-B1B6-6987C6B973BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C321184F-E40D-4E11-B1B6-6987C6B973BE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
