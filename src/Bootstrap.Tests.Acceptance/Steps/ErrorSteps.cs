@@ -13,16 +13,15 @@ public class ErrorSteps
     public ErrorSteps(ErrorDriver errorDriver) => _errorDriver = errorDriver;
 
     /// <summary>
-    /// Usage :
-    /// <br/> - An error is thrown
-    /// <br/> - An error is thrown with message "my message"
-    /// <br/> - An error is thrown with type MyErrorType
-    /// <br/> - An error is thrown with type MyErrorType and message "my message"
-    /// <br/> - A not found error is thrown
-    /// <br/> - A not found error is thrown with type MyErrorType
-    /// <br/> - A not found error is thrown with message "The id (.*) was not found"
-    /// <br/> - A not found error is thrown with type MyErrorType and message "The id (.*) was not found"
-    ///
+    ///     Usage :
+    ///     <br /> - An error is thrown
+    ///     <br /> - An error is thrown with message "my message"
+    ///     <br /> - An error is thrown with type MyErrorType
+    ///     <br /> - An error is thrown with type MyErrorType and message "my message"
+    ///     <br /> - A not found error is thrown
+    ///     <br /> - A not found error is thrown with type MyErrorType
+    ///     <br /> - A not found error is thrown with message "The id (.*) was not found"
+    ///     <br /> - A not found error is thrown with type MyErrorType and message "The id (.*) was not found"
     /// </summary>
     /// <param name="statusCode"></param>
     /// <param name="errorType"></param>
@@ -54,6 +53,9 @@ public class ErrorSteps
             error.ProblemDetails.Title.Should().MatchRegex(message);
         }
     }
+
+    [Then(@"no error occurred")]
+    public void ThenNoErrorOccurred() => _errorDriver.ThrowIfNotProcessedException();
 
     [AfterScenario]
     public void ThrowIfNotProcessedException() => _errorDriver.ThrowIfNotProcessedException();

@@ -8,6 +8,9 @@
 
   <ItemGroup>
     <None Remove="appsettings.test.json" />
+    <None Update="Resources\Emails\welcome-email.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 
   <ItemGroup>

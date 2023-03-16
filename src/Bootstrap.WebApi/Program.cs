@@ -3,6 +3,7 @@ using Bootstrap.BuildingBlocks;
 using Bootstrap.Infrastructure;
 using Bootstrap.Infrastructure.Database;
 using Bootstrap.Infrastructure.DatabaseMigration;
+using Bootstrap.Infrastructure.Emailing;
 using Bootstrap.WebApi.Configuration;
 using Bootstrap.WebApi.Configuration.Authentication;
 using Bootstrap.WebApi.Configuration.Swagger;
@@ -22,6 +23,7 @@ builder.Services
     .RegisterApplication()
     .RegisterInfrastructure()
     .RegisterDatabaseInfrastructure()
+    .RegisterEmailingInfrastructure()
     .RegisterDatabaseMigration()
     ;
 

@@ -1,3 +1,4 @@
+using Bootstrap.BuildingBlocks.DomainEvents;
 using Bootstrap.Domain.Users;
 
 namespace Bootstrap.Infrastructure.Database.Users;
@@ -5,8 +6,13 @@ namespace Bootstrap.Infrastructure.Database.Users;
 internal class SqlUserRepository : IUserRepository
 {
     private readonly BootstrapDbContext _dbContext;
+    private readonly IDomainEventPublisher _domainEventPublisher;
 
-    public SqlUserRepository(BootstrapDbContext dbContext) => _dbContext = dbContext;
+    public SqlUserRepository(BootstrapDbContext dbContext, IDomainEventPublisher domainEventPublisher)
+    {
+        _dbContext = dbContext;
+        _domainEventPublisher = domainEventPublisher;
+    }
 
     public async Task Save(User user)
     {
@@ -20,5 +26,7 @@ internal class SqlUserRepository : IUserRepository
         {
             Id = Guid.NewGuid(), EmailAddress = user.EmailAddress, Password = user.PasswordHash
         });
+
+        await _domainEventPublisher.Publish(user.UncommittedEvents);
     }
 }

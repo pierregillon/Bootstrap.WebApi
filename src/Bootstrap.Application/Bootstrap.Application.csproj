@@ -9,6 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Bootstrap.BuildingBlocks\Bootstrap.BuildingBlocks.csproj" />
     <ProjectReference Include="..\Bootstrap.Domain\Bootstrap.Domain.csproj" />
+    <ProjectReference Include="..\Bootstrap.Infrastructure.Emailing\Bootstrap.Infrastructure.Emailing.csproj" />
     <ProjectReference Include="..\Bootstrap.Infrastructure\Bootstrap.Infrastructure.csproj" />
 	<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
   </ItemGroup>

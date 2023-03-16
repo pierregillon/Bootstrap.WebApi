@@ -1,4 +1,7 @@
 ﻿using Bootstrap.Domain;
+using Bootstrap.Infrastructure.Emailing;
+using Bootstrap.Infrastructure.Emailing.EmailDelivery;
+using Bootstrap.Tests.Acceptance.Fakes;
 using FluentMigrator.Runner;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
@@ -15,6 +18,8 @@ public class TestApplication : TestApplicationBase
     {
         services.AddEntityFrameworkInMemory();
         services.AddSingleton(_ => Substitute.For<IClock>());
+        services.AddSingleton<IEmailSender, FakeEmailSender>();
+        services.ConfigureHtmlRenderingForTests();
     }
 
     protected override void OverrideAcceptanceTestServices(IServiceCollection services) =>
